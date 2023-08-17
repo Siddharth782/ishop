@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db.js"
 import morgan from "morgan";
+import authRoutes from './routes/authRoute.js'
 
 // // configuring env file
 dotenv.config();
@@ -15,6 +16,9 @@ const app = express();
 app.use(express.json());
 // middleware
 app.use(morgan('dev'))
+
+// Related to user -> new account creation, logging into your account
+app.use('/api/v1/auth', authRoutes);
 
 // // API for home page
 app.get('/', (req, res) => {
