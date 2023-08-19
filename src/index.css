@@ -8,3 +8,59 @@
 
 /* font-family: 'Poppins', sans-serif; */
 /* font-family: 'Playfair Display', serif; */
+
+.navbar{
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+  line-height: 26px;
+  text-transform: uppercase;
+  box-shadow: 0 5px 3px -3px gray ;
+  border-bottom: 0.3px solid gray;
+}
+
+.nav-link{
+  font-weight: 300;
+}
+
+.active{
+  border-bottom: 1px solid gold;
+}
+
+.navbar-brand{
+  font-weight: 700;
+}
+
+.footer{
+  color: white;
+  padding: 15px;
+  background: linear-gradient(to right, gray, black);
+}
+
+.footer a{
+  text-decoration: none;
+  color: white;
+  padding: 5px;
+}
+
+.footer a:hover{
+  text-decoration: underline;
+  color: skyblue;
+}
+
+.buttons{
+  padding: 5px; 
+  margin: 5px;
+  border-radius: 12px;
+}
+
+.buttons:hover{
+  background-color: skyblue;
+  color: black;
+}
+
+.fullPageCenter{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100%;
+}

@@ -3,8 +3,15 @@ import Layout from '../components/Layout/Layout'
 
 const PageNotFound = () => {
     return (
-        <Layout>
-            <h1>Page Not Found</h1>
+        <Layout title="Go Back - page not found">
+            <div className='fullPageCenter'>
+                <div style={{ textAlign: 'center' }}>
+
+                    <h1>404</h1>
+                    <h2>Oops! Page Not Found</h2>
+                    <button className='buttons'>Go Back</button>
+                </div>
+            </div>
         </Layout>
     )
 }
