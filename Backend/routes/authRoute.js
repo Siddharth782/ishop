@@ -1,31 +1,45 @@
 import express from 'express';
 const router = express.Router();
 import userModel from '../models/userModel.js';
+import { body, validationResult } from 'express-validator'
 import { comparePassword, hashPassword } from '../helpers/authHelper.js';
 import JWT from 'jsonwebtoken'
 import { isAdmin, requireSignIn } from '../middlewares/authMiddleWare.js';
 
 // creating routes for auth(Registering User)
-router.post('/register', async (req, res) => {
+router.post('/register', [
+    body('name', 'Enter a name of minimum 5 length').isLength({ min: 5 }),
+    body('email', 'Enter a valid email').isEmail(),
+    body('password', 'Enter a password of minimum 6 length').isLength({ min: 6 }),
+    body('address', "Address field can't be empty").isLength({ min: 1 }),
+    body('phone', "Phone field can't be empty").isLength({ min: 1 }),
+], async (req, res) => {
+
+    // checking for length errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ success: false, message: errors.array() });
+    }
+
     try {
         // we get all these from form submitted by user while registering
         const { name, email, password, address, phone } = req.body;
 
         // validation checks
         if (!name) {
-            return res.json({ error: 'Name is required!' })
+            return res.json({ messgae: 'Name is required!' })
         }
         if (!email) {
-            return res.json({ error: 'Email is required!' })
+            return res.json({ message: 'Email is required!' })
         }
         if (!password) {
-            return res.json({ error: "Password can't be empty!" })
+            return res.json({ message: "Password can't be empty!" })
         }
         if (!phone) {
-            return res.json({ error: 'Phone is required!' })
+            return res.json({ message: 'Phone is required!' })
         }
         if (!address) {
-            return res.json({ error: 'Address is required!' })
+            return res.json({ message: 'Address is required!' })
         }
 
         // checking existing user
@@ -34,8 +48,8 @@ router.post('/register', async (req, res) => {
         if (currentUser) {
 
             return res.status(200).json({
-                success: true,
-                message: 'Already Registered with this Email. Try another one or LogIn to your account.'
+                success: false,
+                message: 'Account registered with this Email.Login to your account.'
             })
 
         }
