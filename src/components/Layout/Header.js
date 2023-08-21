@@ -1,8 +1,19 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { BsShop } from 'react-icons/bs'
+import { useSelector, useDispatch } from 'react-redux'
+import { authActions } from '../../redux/authSlice'
 
 const Header = () => {
+    const { user } = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(authActions.logOut());
+        localStorage.removeItem('auth');
+    }
+
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,12 +32,20 @@ const Header = () => {
                             <li className="nav-item">
                                 <NavLink to="/category" className="nav-link ">Category</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <NavLink to="/register" className="nav-link" >Register</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/login" className="nav-link" >Login</NavLink>
-                            </li>
+
+                            {
+                                !user ? (
+                                    <> <li className="nav-item">
+                                        <NavLink to="/register" className="nav-link" >Register</NavLink>
+                                    </li>
+                                        <li className="nav-item">
+                                            <NavLink to="/login" className="nav-link" >Login</NavLink>
+                                        </li> </>
+                                ) : (<>
+                                    <li className="nav-item">
+                                        <NavLink onClick={handleLogout} to="/login" className="nav-link" >Logout</NavLink>
+                                    </li>
+                                </>)}
                             <li className="nav-item">
                                 <NavLink to="/cart" className="nav-link" >Cart (0)</NavLink>
                             </li>

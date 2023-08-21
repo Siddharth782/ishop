@@ -145,5 +145,10 @@ router.get('/test', requireSignIn, isAdmin, (req, res) => {
     }
 })
 
+// protected route (i.e. only open when signed in)
+router.get('/user-auth', requireSignIn, (req, res) => {
+    res.status(200).send({ ok: true });
+})
+
 
 export default router;
