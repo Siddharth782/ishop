@@ -10,6 +10,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
+    const [question, setQuestion] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -17,7 +18,7 @@ const Register = () => {
 
         try {
             let res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
-                name, email, password, phone, address
+                name, email, password, phone, address, question
             })
             // console.log("the response from backend", res);
 
@@ -46,31 +47,37 @@ const Register = () => {
                 <form onSubmit={handleSubmit}>
                     <h2 className='title'>REGISTER FORM</h2>
 
-                    <div className="mb-2">
+                    <div className="mb-1">
                         <label htmlFor="inputName" className="form-label">Name</label>
-                        <input onChange={(e) => setName(e.target.value)} type="text" value={name} className="form-control" id="inputName" placeholder='First and Last Name' minLength={5} required />
+                        <input onChange={(e) => setName(e.target.value)} type="text" value={name} className="form-control" id="inputName" placeholder='Enter your Name' minLength={5} required />
                     </div>
 
-                    <div className="mb-2">
+                    <div className="mb-1">
                         <label htmlFor="inputEmail" className="form-label">Email address</label>
                         <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" className="form-control" id="inputEmail" minLength={1} required />
                     </div>
 
-                    <div className="mb-2">
+                    <div className="mb-1">
                         <label htmlFor="inputPassword" className="form-label">Password</label>
                         <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" className="form-control" id="inputPassword" minLength={6} placeholder='Atleast 6 characters' required />
                     </div>
 
 
-                    <div className="mb-2">
+                    <div className="mb-1">
                         <label htmlFor="inputPhone" className="form-label">Phone</label>
                         <input onChange={(e) => setPhone(e.target.value)} value={phone} type="text" className="form-control" id="inputPhone" minLength={1} required />
                     </div>
 
 
-                    <div className="mb-2">
+                    <div className="mb-1">
                         <label htmlFor="inputAddress" className="form-label">Address</label>
                         <input onChange={(e) => setAddress(e.target.value)} value={address} type="text" className="form-control" id="inputAddress" minLength={1} required />
+                    </div>
+
+
+                    <div className="mb-1">
+                        <label htmlFor="inputAddress" className="form-label">Security Question</label>
+                        <input onChange={(e) => setQuestion(e.target.value)} value={question} type="text" className="form-control" id="inputAddress" minLength={1} required />
                     </div>
 
                     <div className='d-flex justify-content-center'>

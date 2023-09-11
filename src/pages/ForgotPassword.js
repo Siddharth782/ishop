@@ -3,30 +3,30 @@ import Layout from '../components/Layout/Layout'
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { authActions } from '../redux/authSlice';
 
-const Login = () => {
+const ForgotPassword = () => {
+
+
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [question, setQuestion] = useState('');
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            let res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, { email, password })
+            let res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/forgotPassword`, { email, newPassword, question })
 
             if (res?.data?.success) {
                 toast.success(res?.data?.message, {
                     duration: 1000, position: 'top-center'
                 });
-                dispatch(authActions.logIn({ user: res?.data?.user, token: res?.data?.token }));
-                localStorage.setItem('auth', JSON.stringify(res?.data));
+
                 setTimeout(() => {
                     // this is used to redirect to any page we r accessing but we can't access it until we r logged in. so login first then redirect to it.
-                    navigate('/');
+                    navigate('/login');
                 }, 1000);
             }
             else {
@@ -40,10 +40,10 @@ const Login = () => {
     }
 
     return (
-        <Layout title="Login - iShop">
+        <Layout title={"Forgot Password"}>
             <div className="form-container">
                 <form onSubmit={handleSubmit}>
-                    <h2 className='title'>LOGIN FORM</h2>
+                    <h2 className='title'>RESET PASSWORD</h2>
 
                     <div className="mb-2">
                         <label htmlFor="inputEmail" className="form-label my-0">Email address</label>
@@ -51,17 +51,18 @@ const Login = () => {
                     </div>
 
                     <div className="mb-2">
-                        <label htmlFor="inputPassword" className="form-label my-0">Password</label>
-                        <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" className="form-control" id="inputPassword" minLength={6} required />
+                        <label htmlFor="inputPassword" className="form-label my-0">New Password</label>
+                        <input onChange={(e) => setNewPassword(e.target.value)} value={newPassword} type="password" className="form-control" id="inputPassword" minLength={6} required />
+                    </div>
+
+                    <div className="mb-2">
+                        <label htmlFor="inputQuestion" className="form-label my-0">Security Question</label>
+                        <input onChange={(e) => setQuestion(e.target.value)} value={question} type="text" className="form-control" id="inputQuestion" minLength={1} required />
                     </div>
 
 
                     <div className='d-flex mb-2 justify-content-center'>
-                        <button type="submit">Login</button>
-                    </div>
-
-                    <div className='d-flex mb-2 justify-content-center' onClick={() => navigate('/forgotPassword')}>
-                        <button type="submit">Forgot Password</button>
+                        <button type="submit">RESET</button>
                     </div>
 
                 </form>
@@ -70,4 +71,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default ForgotPassword

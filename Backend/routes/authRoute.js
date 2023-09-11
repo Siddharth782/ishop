@@ -23,11 +23,11 @@ router.post('/register', [
 
     try {
         // we get all these from form submitted by user while registering
-        const { name, email, password, address, phone } = req.body;
+        const { name, email, password, address, phone, question } = req.body;
 
         // validation checks
         if (!name) {
-            return res.json({ messgae: 'Name is required!' })
+            return res.json({ message: 'Name is required!' })
         }
         if (!email) {
             return res.json({ message: 'Email is required!' })
@@ -39,6 +39,9 @@ router.post('/register', [
             return res.json({ message: 'Phone is required!' })
         }
         if (!address) {
+            return res.json({ message: 'Address is required!' })
+        }
+        if (!question) {
             return res.json({ message: 'Address is required!' })
         }
 
@@ -58,7 +61,7 @@ router.post('/register', [
         const hashedPassword = await hashPassword(password);
 
         // saving the new user
-        const newUser = await new userModel({ name, email, phone, address, password: hashedPassword }).save()
+        const newUser = await new userModel({ name, email, phone, address, password: hashedPassword, question }).save()
 
         res.status(201).json({
             success: true,
@@ -129,6 +132,53 @@ router.post("/login", async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error while logging in',
+            error
+        })
+    }
+})
+
+// forgot password
+router.post('/forgotPassword', async (req, res) => {
+    try {
+        const { email, question, newPassword } = req.body;
+
+        if (!email) {
+            return res.status(400).send({
+                message: 'Email is required'
+            })
+        }
+        if (!question) {
+            return res.status(400).send({
+                message: 'Question is required'
+            })
+        }
+        if (!newPassword) {
+            return res.status(400).send({
+                message: 'New Password is required'
+            })
+        }
+
+        const user = await userModel.findOne({ email, question });
+
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                message: 'Wrong Email or Question'
+            })
+        }
+
+        const hashedPassword = await hashPassword(newPassword);
+        await userModel.findByIdAndUpdate(user._id, { password: hashedPassword });
+        return res.status(200).send({
+            success: true,
+            message: 'Password Reset Successful'
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Something went wrong',
             error
         })
     }
