@@ -7,7 +7,7 @@ import { authActions } from '../../redux/authSlice'
 const Header = () => {
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
-
+    console.log("role", user?.role)
     const handleLogout = () => {
         dispatch(authActions.logOut());
         localStorage.removeItem('auth');
@@ -53,7 +53,7 @@ const Header = () => {
                                         </NavLink>
 
                                         <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li><NavLink className="dropdown-item" to="/dashboard">Dashboard</NavLink></li>
+                                            <li><NavLink className="dropdown-item" to={`/dashboard${user?.role === 1 ? "/admin" : ""}`}>Dashboard</NavLink></li>
                                             <li><NavLink onClick={handleLogout} to="/login" className="dropdown-item" >Logout</NavLink></li>
                                         </ul>
                                     </li>
@@ -67,7 +67,7 @@ const Header = () => {
                         </ul>
                     </div>
 
-                </div>
+                </div >
             </nav >
         </>
     )

@@ -119,10 +119,11 @@ router.post("/login", async (req, res) => {
             success: true,
             message: 'Logged In Successfully.',
             user: {
-                name: user.name,
-                email: user.email,
-                phone: user.phone,
-                address: user.address,
+                name: user?.name,
+                email: user?.email,
+                phone: user?.phone,
+                address: user?.address,
+                role: user?.role
             },
             token
         });
@@ -200,5 +201,10 @@ router.get('/user-auth', requireSignIn, (req, res) => {
     res.status(200).send({ ok: true });
 })
 
+
+// protected route (i.e. only admin can access it)
+router.get('/admin-auth', requireSignIn, isAdmin, (req, res) => {
+    res.status(200).send({ ok: true });
+})
 
 export default router;
