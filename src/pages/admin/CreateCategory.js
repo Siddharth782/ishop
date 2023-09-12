@@ -128,12 +128,12 @@ const CreateCategory = () => {
 
     return (
         <Layout title={"Dashboard- Create Category"}>
-            <div className="container-fluid m-3 p-3">
+            <div className="container-fluid p-3">
 
                 <div className="row">
                     <div className="col-md-3"> <AdminMenu /> </div>
                     <div className="col-md-9">
-                        <h4> Manage Categories </h4>
+                        <h1> Manage Categories </h1>
 
                         <div className="p-3 w-50">
                             <CategoryForm handleSubmit={handleSubmit} value={name} setValue={setName} />

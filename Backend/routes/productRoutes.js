@@ -3,6 +3,7 @@ import slugify from 'slugify';
 import { isAdmin, requireSignIn } from '../middlewares/authMiddleWare.js';
 import productModel from '../models/productModel.js';
 import formidable from 'express-formidable';
+import fs from 'fs';
 
 const router = express.Router();
 
@@ -40,14 +41,14 @@ router.post('/create-product', requireSignIn, isAdmin, formidable(), async (req,
                     message: "Quantity of product is required",
                 })
                 break;
-            case photo && photo.size > 1000:
+            case photo && photo.size > 10000000:
                 return res.status(500).send({
                     message: "Photo is required",
                 })
                 break;
         }
 
-        const products = new productModel.findOne({ ...req.fields, slug: slugify(name) });
+        const products = new productModel({ ...req.fields, slug: slugify(name) });
 
         if (photo) {
             products.photo.data = fs.readFileSync(photo?.path);
@@ -74,13 +75,16 @@ router.post('/create-product', requireSignIn, isAdmin, formidable(), async (req,
 
 
 // updating product
-router.put('/update-product/:pid', requireSignIn, isAdmin, async (req, res) => {
+router.put('/update-product/:pid', requireSignIn, isAdmin, formidable(), async (req, res) => {
+    console.log("inside function")
     try {
+        console.log("inside function & trying")
 
         const { name, slug, description, price, category, quantity, shipping } = req.fields;
         const { photo } = req.files;
         const { pid } = req.params;
 
+        console.log("after destruct")
         switch (true) {
             case !name:
                 return res.status(500).send({
@@ -107,23 +111,27 @@ router.put('/update-product/:pid', requireSignIn, isAdmin, async (req, res) => {
                     message: "Quantity of product is required",
                 })
                 break;
-            case photo && photo.size > 1000:
+            case photo && photo.size > 1000000:
                 return res.status(500).send({
                     message: "Photo is required",
                 })
                 break;
         }
 
+        console.log("after checking values")
         const products = await productModel.findByIdAndUpdate(pid, { ...req?.fields, slug: slugify(name) }, { new: true });
+
+        console.log("after finding product")
 
         if (photo) {
             products.photo.data = fs.readFileSync(photo?.path);
             products.photo.contentType = photo.type;
         }
 
+        console.log("after checking photo")
         await products.save();
 
-        res.status(200).send({
+        return res.status(200).send({
             success: true,
             message: "Product updated successfully.",
             products
@@ -131,10 +139,10 @@ router.put('/update-product/:pid', requireSignIn, isAdmin, async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).send({
+        return res.status(500).send({
             success: false,
             error,
-            message: "Error while updating product"
+            message: "Error while Updating product"
         })
     }
 })
@@ -215,7 +223,7 @@ router.get('/product-photo/:pid', async (req, res) => {
 
 
 // delete one product
-router.get('/product/:pid', isAdmin, requireSignIn, async (req, res) => {
+router.delete('/delete-product/:pid', requireSignIn, isAdmin, async (req, res) => {
     try {
 
         const { pid } = req?.params;

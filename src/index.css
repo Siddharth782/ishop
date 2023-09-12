@@ -100,3 +100,9 @@
 .form-container form button:hover{
   background: linear-gradient(to right, gray, black);
 }
+
+/* this is for products */
+.product-link{
+  text-decoration: none !important;
+  color: black !important;
+}
