@@ -9,7 +9,7 @@ export default function PrivateRoute() {
     const token = JSON.parse(localStorage?.getItem('auth'))?.token
     console.log("inside private", token);
 
-    async function authCheck() {
+    const authCheck = async () => {
         console.log("inside checking");
         let res = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/user-auth`, {
             headers: {

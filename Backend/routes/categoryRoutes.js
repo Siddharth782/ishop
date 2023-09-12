@@ -10,7 +10,7 @@ router.post('/create-category', requireSignIn, isAdmin, async (req, res) => {
 
     try {
 
-        const { name } = req.body;
+        const { name } = req?.body;
 
         if (!name) {
             return res.status(401).send({
@@ -28,7 +28,7 @@ router.post('/create-category', requireSignIn, isAdmin, async (req, res) => {
         }
 
         const category = await new categoryModel({ name, slug: slugify(name) }).save();
-        res.status(200).send({
+        return res.status(200).send({
             success: true,
             message: 'New category created',
             category
@@ -36,7 +36,7 @@ router.post('/create-category', requireSignIn, isAdmin, async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).send({
+        return res.status(500).send({
             success: false,
             error,
             message: "Error in category"
@@ -85,7 +85,7 @@ router.get('/get-category', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        console.log("getting category error  ", error);
         res.status(500).send({
             success: false,
             error,
@@ -118,9 +118,9 @@ router.get('/single-category/:slug', async (req, res) => {
 })
 
 // delete one category
-router.get('/delete-category/:id', isAdmin, requireSignIn, async (req, res) => {
+router.delete('/delete-category/:id', requireSignIn, isAdmin, async (req, res) => {
     try {
-
+        console.log("just inside")
         const { id } = req.params;
         await categoryModel.findByIdAndDelete(id);
 

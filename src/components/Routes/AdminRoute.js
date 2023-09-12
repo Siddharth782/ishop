@@ -7,10 +7,10 @@ export default function AdminRoute() {
 
     const [ok, setOk] = useState(false);
     const token = JSON.parse(localStorage?.getItem('auth'))?.token
-    console.log("inside private", token);
+    console.log("inside admin private", token);
 
-    async function authCheck() {
-        console.log("inside checking");
+    const authCheck = async () => {
+        console.log("inside admin checking");
         let res = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/admin-auth`, {
             headers: {
                 "Authorization": token
@@ -20,7 +20,7 @@ export default function AdminRoute() {
         if (res?.data?.ok) {
             setOk(true);
         } else setOk(false);
-        console.log("checking done");
+        console.log("checking done for admin");
 
     }
     useEffect(() => {

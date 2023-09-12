@@ -50,8 +50,8 @@ router.post('/create-product', requireSignIn, isAdmin, formidable(), async (req,
         const products = new productModel.findOne({ ...req.fields, slug: slugify(name) });
 
         if (photo) {
-            products?.photo?.data = fs.readFileSync(photo?.path);
-            products?.photo?.contentType = photo.type;
+            products.photo.data = fs.readFileSync(photo?.path);
+            products.photo.contentType = photo.type;
         }
 
         await products.save();
@@ -117,8 +117,8 @@ router.put('/update-product/:pid', requireSignIn, isAdmin, async (req, res) => {
         const products = await productModel.findByIdAndUpdate(pid, { ...req?.fields, slug: slugify(name) }, { new: true });
 
         if (photo) {
-            products?.photo?.data = fs.readFileSync(photo?.path);
-            products?.photo?.contentType = photo.type;
+            products.photo.data = fs.readFileSync(photo?.path);
+            products.photo.contentType = photo.type;
         }
 
         await products.save();
