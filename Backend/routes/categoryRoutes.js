@@ -28,7 +28,7 @@ router.post('/create-category', requireSignIn, isAdmin, async (req, res) => {
         }
 
         const category = await new categoryModel({ name, slug: slugify(name) }).save();
-        res.status(20).send({
+        res.status(200).send({
             success: true,
             message: 'New category created',
             category

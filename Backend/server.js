@@ -4,6 +4,7 @@ import connectDB from "./db.js"
 import morgan from "morgan";
 import authRoutes from './routes/authRoute.js'
 import categoryRoutes from './routes/categoryRoutes.js'
+import productRoutes from './routes/productRoutes.js'
 import cors from 'cors'
 
 // // configuring env file
@@ -25,7 +26,11 @@ app.use('/api/v1/auth', authRoutes);
 
 
 // Related to category -> creating different categories, placing products in them
-app.use('/api/v1/auth', categoryRoutes);
+app.use('/api/v1/category', categoryRoutes);
+
+
+// Related to products -> creating different products
+app.use('/api/v1/product', productRoutes);
 
 // // API for home page
 app.get('/', (req, res) => {
