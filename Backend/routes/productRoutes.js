@@ -300,7 +300,7 @@ router.get('/product-count', async (req, res) => {
 router.get('/product-list/:page', async (req, res) => {
     try {
 
-        const perPage = 2;
+        const perPage = 6;
         const page = req.params?.page ? req.params?.page : 1;
 
         const products = await productModel.find({}).select("-photo").skip((page - 1) * perPage).limit(perPage).sort({ createdAt: -1 });
@@ -317,6 +317,40 @@ router.get('/product-list/:page', async (req, res) => {
             success: false,
             error,
             message: "Error in per page ctrl"
+        })
+    }
+})
+
+
+// products by search
+router.get('/search/:keyword', async (req, res) => {
+    try {
+
+        const { keyword } = req?.params;
+
+
+        // if the keyword matches any word in name or description we would show it. so we used $or
+        // $options is for making the search case insensitive
+        const results = await productModel.find({
+            $or: [
+                { name: { $regex: keyword, $options: "i" } },
+                { description: { $regex: keyword, $options: "i" } }
+            ]
+        }).select("-photo");
+
+        res.json(results);
+        // res.status(200).send({
+        //     success: true,
+        //     products
+        // })
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            success: false,
+            error,
+            message: "Error in search products"
         })
     }
 })

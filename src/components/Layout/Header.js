@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { BsShop } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux'
 import { authActions } from '../../redux/authSlice'
+import SearchInput from '../Form/SearchInput'
 
 const Header = () => {
     const { user } = useSelector(state => state.auth);
@@ -23,6 +24,8 @@ const Header = () => {
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
+
+                    <SearchInput />
 
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

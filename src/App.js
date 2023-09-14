@@ -19,12 +19,16 @@ import Orders from './pages/user/Orders';
 import Profile from './pages/user/Profile';
 import Products from './pages/admin/Products';
 import UpdateProduct from './pages/admin/UpdateProduct';
+import Search from './pages/Search';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   return (
     <Provider store={store}>
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route path='/search' element={<Search />} />
+        <Route path='/product/:slug' element={<ProductDetails />} />
         {/* These become a protected (nested) route. it will first check the condition in Private & then we will display the dashboard component. */}
 
         {/* This is for user */}

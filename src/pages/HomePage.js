@@ -3,11 +3,12 @@ import Layout from '../components/Layout/Layout'
 import { useSelector } from 'react-redux'
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Checkbox, Radio } from 'antd';
 import { Prices } from '../components/Prices.js'
 
 const HomePage = () => {
+    const navigate = useNavigate();
     const { user } = useSelector(state => state.auth);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -198,7 +199,7 @@ const HomePage = () => {
                                     <h6 className="card-title">{product?.name}</h6>
                                     <p className="card-text">Rs. {product?.price}</p>
                                     <p className="card-text">{product?.description.substring(0, 60)}</p>
-                                    <button className="btn btn-primary ms-1">More Details</button>
+                                    <button onClick={() => { navigate(`/product/${product?.slug}`) }} className="btn btn-primary ms-1">More Details</button>
                                     <button className="btn btn-secondary ms-1">Add to cart</button>
                                 </div>
                             </div>
