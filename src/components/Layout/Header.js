@@ -4,10 +4,12 @@ import { BsShop } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux'
 import { authActions } from '../../redux/authSlice'
 import SearchInput from '../Form/SearchInput'
+import useCategory from '../../hooks/useCategory'
 
 const Header = () => {
     const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const categories = useCategory();
     console.log("role", user?.role)
     const handleLogout = () => {
         dispatch(authActions.logOut());
@@ -32,8 +34,23 @@ const Header = () => {
                             <li className="nav-item">
                                 <NavLink to="/" className="nav-link ">Home</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <NavLink to="/category" className="nav-link ">Category</NavLink>
+
+                            <li className="nav-item dropdown">
+                                <Link className="nav-link dropdown-toggle" to={"/categories"} id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Categories
+                                </Link>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <Link to={`/categories`} className="dropdown-item">
+                                        All categories
+                                    </Link>
+                                    {categories?.map((cat) =>
+                                        <li>
+                                            <Link to={`/category/${cat.slug}`} className="dropdown-item">
+                                                {cat.name}
+                                            </Link>
+                                        </li>
+                                    )}
+                                </ul>
                             </li>
 
                             {/* the below fragment is for checking if there is a user logged in or not */}

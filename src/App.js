@@ -21,6 +21,8 @@ import Products from './pages/admin/Products';
 import UpdateProduct from './pages/admin/UpdateProduct';
 import Search from './pages/Search';
 import ProductDetails from './pages/ProductDetails';
+import Categories from './Categories';
+import CategoryProduct from './pages/CategoryProduct';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/search' element={<Search />} />
         <Route path='/product/:slug' element={<ProductDetails />} />
+        <Route path='/categories' element={<Categories />} />
+        <Route path='/category/:slug' element={<CategoryProduct />} />
         {/* These become a protected (nested) route. it will first check the condition in Private & then we will display the dashboard component. */}
 
         {/* This is for user */}

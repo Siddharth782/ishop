@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout/Layout'
-import { useSelector } from 'react-redux'
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Checkbox, Radio } from 'antd';
 import { Prices } from '../components/Prices.js'
 
 const HomePage = () => {
     const navigate = useNavigate();
-    const { user } = useSelector(state => state.auth);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [checked, setChecked] = useState([]);

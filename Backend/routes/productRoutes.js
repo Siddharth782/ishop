@@ -4,6 +4,7 @@ import { isAdmin, requireSignIn } from '../middlewares/authMiddleWare.js';
 import productModel from '../models/productModel.js';
 import formidable from 'express-formidable';
 import fs from 'fs';
+import categoryModel from '../models/categoryModel.js';
 
 const router = express.Router();
 
@@ -351,6 +352,62 @@ router.get('/search/:keyword', async (req, res) => {
             success: false,
             error,
             message: "Error in search products"
+        })
+    }
+})
+
+
+// similar products
+router.get('/related-product/:pid/:cid', async (req, res) => {
+    try {
+
+        const { pid, cid } = req?.params;
+
+        const products = await productModel.find({
+            category: cid,
+            _id: { $ne: pid }
+        }).select("-photo").limit(8).populate("category");
+
+        res.status(200).send({
+            success: true,
+            products
+        })
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            success: false,
+            error,
+            message: "Error in getting related products"
+        })
+    }
+})
+
+
+// category wise products
+router.get('/product-category/:slug', async (req, res) => {
+    try {
+
+        const { slug } = req?.params;
+
+        const category = await categoryModel.findOne({ slug: slug });
+
+        const products = await productModel.find({ category }).populate("category");
+
+        res.status(200).send({
+            success: true,
+            category,
+            products
+        })
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            success: false,
+            error,
+            message: "Error in category wise products"
         })
     }
 })
