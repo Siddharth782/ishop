@@ -245,4 +245,81 @@ router.delete('/delete-product/:pid', requireSignIn, isAdmin, async (req, res) =
     }
 })
 
+
+// filter product
+router.post('/product-filters', async (req, res) => {
+    try {
+
+        const { checked, radio } = req?.body;
+        let args = {};
+        if (checked.length > 0) args.category = checked
+
+        if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] }
+
+        const products = await productModel.find(args);
+
+        res.status(200).send({
+            success: true,
+            products
+        })
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            success: false,
+            error,
+            message: "Error while filtering product"
+        })
+    }
+})
+
+// product count
+router.get('/product-count', async (req, res) => {
+    try {
+
+        const total = await productModel.find({}).estimatedDocumentCount();
+
+        res.status(200).send({
+            success: true,
+            total
+        })
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            success: false,
+            error,
+            message: "Error in product count"
+        })
+    }
+})
+
+// products per page
+router.get('/product-list/:page', async (req, res) => {
+    try {
+
+        const perPage = 2;
+        const page = req.params?.page ? req.params?.page : 1;
+
+        const products = await productModel.find({}).select("-photo").skip((page - 1) * perPage).limit(perPage).sort({ createdAt: -1 });
+
+        res.status(200).send({
+            success: true,
+            products
+        })
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            success: false,
+            error,
+            message: "Error in per page ctrl"
+        })
+    }
+})
+
+
 export default router
