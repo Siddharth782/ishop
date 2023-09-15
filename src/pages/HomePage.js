@@ -5,9 +5,13 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Checkbox, Radio } from 'antd';
 import { Prices } from '../components/Prices.js'
+import { useDispatch, useSelector } from 'react-redux';
+import { cartActions } from '../redux/cartSlice';
 
 const HomePage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { cart } = useSelector(state => state.cart);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [checked, setChecked] = useState([]);
@@ -15,6 +19,8 @@ const HomePage = () => {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
+
+    // console.log("cart is", cart)
 
     // get total count 
     const getTotal = async () => {
@@ -90,6 +96,17 @@ const HomePage = () => {
             console.log(error);
         }
 
+    }
+
+    const handleAddToCart = (product) => {
+        try {
+            dispatch(cartActions.addToCart({ product: product }));
+            // localStorage.setItem('cart', JSON.stringify([...cart, product]));
+            toast.success("Item added to cart");
+        } catch (error) {
+            console.log(error);
+            toast.error("Error while adding item to cart");
+        }
     }
 
     // getting filtered products
@@ -197,8 +214,11 @@ const HomePage = () => {
                                     <h6 className="card-title">{product?.name}</h6>
                                     <p className="card-text">Rs. {product?.price}</p>
                                     <p className="card-text">{product?.description.substring(0, 60)}</p>
+
                                     <button onClick={() => { navigate(`/product/${product?.slug}`) }} className="btn btn-primary ms-1">More Details</button>
-                                    <button className="btn btn-secondary ms-1">Add to cart</button>
+
+
+                                    <button onClick={() => handleAddToCart(product)} className="btn btn-secondary ms-1">Add to cart</button>
                                 </div>
                             </div>
                         )}

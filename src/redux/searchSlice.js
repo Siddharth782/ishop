@@ -8,10 +8,6 @@ const searchSlice = createSlice({
         inputSearch(state, actions) {
             state.keyword = actions.payload?.keyword;
             state.results = actions.payload?.results;
-        },
-        logOut(state) {
-            state.keyword = "";
-            state.results = [];
         }
     }
 })

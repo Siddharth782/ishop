@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { authActions } from '../../redux/authSlice'
 import SearchInput from '../Form/SearchInput'
 import useCategory from '../../hooks/useCategory'
+import { Badge } from 'antd'
 
 const Header = () => {
     const { user } = useSelector(state => state.auth);
+    const { cart } = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const categories = useCategory();
-    console.log("role", user?.role)
+
     const handleLogout = () => {
         dispatch(authActions.logOut());
         localStorage.removeItem('auth');
@@ -82,7 +84,9 @@ const Header = () => {
 
                                 </>)}
                             <li className="nav-item">
-                                <NavLink to="/cart" className="nav-link" >Cart (0)</NavLink>
+                                <Badge count={cart?.length}>
+                                    <NavLink to="/cart" className="nav-link" >Cart</NavLink>
+                                </Badge>
                             </li>
                         </ul>
                     </div>
