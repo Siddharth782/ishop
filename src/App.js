@@ -24,6 +24,9 @@ import ProductDetails from './pages/ProductDetails';
 import Categories from './Categories';
 import CategoryProduct from './pages/CategoryProduct';
 import CartPage from './pages/CartPage';
+import AdminOrders from './pages/admin/AdminOrders';
+import OrderDetails from './pages/user/OrderDetails';
+import AdminOrderDetails from './pages/admin/AdminOrderDetails';
 
 function App() {
   return (
@@ -41,6 +44,7 @@ function App() {
         <Route path='/dashboard' element={<PrivateRoute />}>
           <Route path='' element={<Dashboard />} />
           <Route path='user/orders' element={<Orders />} />
+          <Route path='user/order-details/:id' element={<OrderDetails />} />
           <Route path='user/profile' element={<Profile />} />
         </Route>
 
@@ -50,7 +54,8 @@ function App() {
           <Route path='admin/create-category' element={<CreateCategory />} />
           <Route path='admin/create-product' element={<CreateProduct />} />
           <Route path='admin/product/:slug' element={<UpdateProduct />} />
-          <Route path='admin/users' element={<Users />} />
+          <Route path='admin/orders' element={<AdminOrders />} />
+          <Route path='admin/order-update/:id' element={<AdminOrderDetails />} />
           <Route path='admin/products' element={<Products />} />
         </Route>
 

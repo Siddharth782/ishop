@@ -5,6 +5,7 @@ import { body, validationResult } from 'express-validator'
 import { comparePassword, hashPassword } from '../helpers/authHelper.js';
 import JWT from 'jsonwebtoken'
 import { isAdmin, requireSignIn } from '../middlewares/authMiddleWare.js';
+import orderModel from '../models/orderModel.js';
 
 // creating routes for auth(Registering User)
 router.post('/register', [
@@ -254,5 +255,79 @@ router.put('/profile', requireSignIn, async (req, res) => {
     }
 
 })
+
+// orders
+router.get('/orders', requireSignIn, async (req, res) => {
+    try {
+
+        const orders = await orderModel.find({ buyer: req.user._id }).populate("products", "-photo").populate("buyer");
+
+        res.json(orders);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error while getting orders',
+            error
+        })
+    }
+})
+
+// all orders received (for admin panel)
+router.get('/all-orders', requireSignIn, isAdmin, async (req, res) => {
+    try {
+
+        const orders = await orderModel.find({}).populate("products", "-photo").populate("buyer").sort({ createdAt: "-1" });
+
+        res.json(orders);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error while getting received orders',
+            error
+        })
+    }
+})
+
+// order details (for user,admin)
+router.get('/order-details/:id', requireSignIn, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const order = await orderModel.findById(id).populate("products", "-photo").populate("buyer");
+
+        res.json(order);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error while getting order details',
+            error
+        })
+    }
+})
+
+// order details (for admin)
+router.put('/order-update/:id', requireSignIn, isAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const order = await orderModel.findByIdAndUpdate(id, { status }, { new: true });
+
+        res.json(order);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error while updating order status',
+            error
+        })
+    }
+})
+
 
 export default router;

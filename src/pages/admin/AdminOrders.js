@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from 'react'
+import AdminMenu from '../../components/Layout/AdminMenu'
 import Layout from '../../components/Layout/Layout'
-import UserMenu from '../../components/Layout/UserMenu'
-import toast from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import moment from 'moment/moment';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import moment from 'moment'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-const Orders = () => {
-    const { token } = useSelector(state => state.auth)
-    const [orders, setOrders] = useState([]);
+const AdminOrders = () => {
     const navigate = useNavigate();
+    const { token } = useSelector(state => state.auth)
+    const [orders, setOrders] = useState([])
 
-    const getOrders = async () => {
+    const getAllOrdersReceived = async () => {
         try {
 
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/orders`, {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/all-orders`, {
                 headers: {
                     'Authorization': token,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
             });
-
-            console.log("this is data", data);
 
             setOrders(data);
 
@@ -33,19 +31,20 @@ const Orders = () => {
         }
     }
 
+
     useEffect(() => {
-        getOrders();
+        getAllOrdersReceived();
     }, [])
 
-
     return (
-        <Layout title={"Your Orders"}>
-            <div className="container-fluid my-3 p-3">
+        <Layout title="All Received Orders">
+            <div className="container-fluid p-3">
                 <div className="row">
-                    <div className="col-md-3"> <UserMenu /> </div>
+                    <div className="col-md-3">
+                        <AdminMenu />
+                    </div>
                     <div className="col-md-9">
-                        <h4 className='text-center'>All Orders</h4>
-
+                        <h1 className='text-center'>All Orders</h1>
                         <div className="border shadow">
                             <table className='table'>
                                 <thead>
@@ -53,7 +52,7 @@ const Orders = () => {
                                         <th scope='col'>#</th>
                                         <th scope='col'>Status</th>
                                         <th scope='col'>Buyer</th>
-                                        <th scope='col'>Ordered</th>
+                                        <th scope='col'>Orders</th>
                                         <th scope='col'>Payment</th>
                                         <th scope='col'>Quantity</th>
                                     </tr>
@@ -62,7 +61,7 @@ const Orders = () => {
                                     {
                                         orders?.map((o, i) => {
                                             return (
-                                                <tr onClick={() => { navigate(`/dashboard/user/order-details/${o._id}`) }}>
+                                                <tr onClick={() => { navigate(`/dashboard/admin/order-update/${o._id}`) }}>
                                                     <td>{i + 1}</td>
                                                     <td>{o?.status}</td>
                                                     <td>{o?.buyer?.name}</td>
@@ -82,4 +81,4 @@ const Orders = () => {
     )
 }
 
-export default Orders
+export default AdminOrders
