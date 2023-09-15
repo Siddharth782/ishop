@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.9.0",
     "axios": "^1.4.0",
+    "braintree-web-drop-in-react": "^1.2.1",
     "concurrently": "^8.2.0",
     "cors": "^2.8.5",
     "express-formidable": "^1.2.0",

@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '../components/Layout/Layout'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { cartActions } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
+import axios from 'axios';
+import DropIn from 'braintree-web-drop-in-react';
+
 
 const CartPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { user, token } = useSelector(state => state.auth);
   const { cart } = useSelector(state => state.cart);
 
-  // total price
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  // total price
   const totalPrice = () => {
     try {
       let total = 0;
@@ -44,6 +51,60 @@ const CartPage = () => {
       toast.error("Error while removing item from cart");
     }
   }
+
+  // get payment gateway token
+  const getToken = async () => {
+    try {
+
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/braintree/token`);
+
+      if (data?.success) {
+        setClientToken(data?.clientToken);
+      }
+      else {
+        toast.error("Didn't get a client token from payment gateway");
+      }
+
+    } catch (error) {
+      console.log(error);
+      toast.error("Error while getting token");
+    }
+  }
+
+  const handlePayment = async () => {
+    setLoading(true);
+    try {
+
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/braintree/payment`, { nonce, cart }, {
+        headers: {
+          'Authorization': token,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      setLoading(false);
+
+      if (data?.ok) {
+        localStorage.removeItem("cart");
+        dispatch(cartActions.emptyCart());
+        navigate('/dashboard/user/orders');
+        toast.success("Payment Successful");
+      }
+
+    } catch (error) {
+
+      setLoading(false);
+      console.log(error);
+      toast.error("Payment Failed")
+
+    }
+  }
+
+  useEffect(() => {
+    getToken();
+  }, [token])
+
 
   return (
     <Layout>
@@ -110,6 +171,20 @@ const CartPage = () => {
                 </>
               )
             }
+
+            <div className="my-1">
+
+              {(clientToken && cart.length) && <DropIn
+                options={{ authorization: clientToken }}
+                onInstance={(instance) => (setInstance(instance))}
+              />}
+
+              <button className='btn btn-primary' onClick={handlePayment}>
+                {loading ? "Processing Payment" : "Make Payment"}
+              </button>
+
+            </div>
+
           </div>
         </div>
 

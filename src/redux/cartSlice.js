@@ -10,6 +10,9 @@ const cartSlice = createSlice({
         },
         removeFromCart(state, actions) {
             state.cart = actions.payload?.cart;
+        },
+        emptyCart(state) {
+            state.cart = []
         }
     }
 })
