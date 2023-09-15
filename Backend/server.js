@@ -41,5 +41,5 @@ app.get('/', (req, res) => {
 const PORT = 8000 || process.env.PORT;
 
 app.listen(PORT, () => {
-    console.log(`Running on port ${PORT}`);
+    // console.log(`Running on port ${PORT}`);
 })

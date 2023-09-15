@@ -24,7 +24,7 @@ const ProductDetails = () => {
 
         } catch (error) {
             setLoading(false);
-            console.log(error);
+            // console.log(error);;
             toast.error("Something went wrong while getting products");
         }
 
@@ -43,7 +43,7 @@ const ProductDetails = () => {
 
         } catch (error) {
             setLoading(false);
-            console.log(error);
+            // console.log(error);;
             toast.error("Something went wrong while getting similar products");
         }
 

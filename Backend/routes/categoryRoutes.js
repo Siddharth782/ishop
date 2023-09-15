@@ -35,7 +35,7 @@ router.post('/create-category', requireSignIn, isAdmin, async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         return res.status(500).send({
             success: false,
             error,
@@ -61,7 +61,7 @@ router.put('/update-category/:id', requireSignIn, isAdmin, async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             error,
@@ -85,7 +85,7 @@ router.get('/get-category', async (req, res) => {
 
 
     } catch (error) {
-        console.log("getting category error  ", error);
+        // console.log("getting category error  ", error);
         res.status(500).send({
             success: false,
             error,
@@ -108,7 +108,7 @@ router.get('/single-category/:slug', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             error,
@@ -120,7 +120,7 @@ router.get('/single-category/:slug', async (req, res) => {
 // delete one category
 router.delete('/delete-category/:id', requireSignIn, isAdmin, async (req, res) => {
     try {
-        console.log("just inside")
+        // console.log("just inside")
         const { id } = req.params;
         await categoryModel.findByIdAndDelete(id);
 
@@ -131,7 +131,7 @@ router.delete('/delete-category/:id', requireSignIn, isAdmin, async (req, res) =
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             error,

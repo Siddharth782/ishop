@@ -29,7 +29,7 @@ const CartPage = () => {
         currency: "INR",
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);;
       toast.error("Error while removing item from cart");
     }
   }
@@ -47,7 +47,7 @@ const CartPage = () => {
       dispatch(cartActions.removeFromCart({ cart: myCart }));
       toast.success("Item removed from cart");
     } catch (error) {
-      console.log(error);
+      // console.log(error);;
       toast.error("Error while removing item from cart");
     }
   }
@@ -66,7 +66,7 @@ const CartPage = () => {
       }
 
     } catch (error) {
-      console.log(error);
+      // console.log(error);;
       toast.error("Error while getting token");
     }
   }
@@ -95,7 +95,7 @@ const CartPage = () => {
     } catch (error) {
 
       setLoading(false);
-      console.log(error);
+      // console.log(error);;
       toast.error("Payment Failed")
 
     }

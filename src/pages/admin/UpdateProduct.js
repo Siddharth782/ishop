@@ -44,7 +44,7 @@ const UpdateProduct = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Something went wrong while getting product details.");
         }
 
@@ -62,7 +62,7 @@ const UpdateProduct = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Something went wrong while getting category");
         }
 
@@ -97,7 +97,7 @@ const UpdateProduct = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error while updating product");
         }
     }
@@ -124,7 +124,7 @@ const UpdateProduct = () => {
                 }
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error while deleting product");
         }
     }

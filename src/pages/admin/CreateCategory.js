@@ -42,7 +42,7 @@ const CreateCategory = () => {
 
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error('Error in updating category');
         }
     }
@@ -50,7 +50,7 @@ const CreateCategory = () => {
     // handle delete
     const handleDelete = async (id) => {
 
-        console.log("the id is ", id);
+        // console.log("the id is ", id);
         try {
 
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/category/delete-category/${id}`, {
@@ -70,7 +70,7 @@ const CreateCategory = () => {
 
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error('Error in deleting category');
         }
     }
@@ -100,7 +100,7 @@ const CreateCategory = () => {
 
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error('Error in input form');
         }
     }
@@ -116,7 +116,7 @@ const CreateCategory = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Something went wrong while getting category");
         }
 

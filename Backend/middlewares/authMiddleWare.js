@@ -13,7 +13,7 @@ export const requireSignIn = async (req, res, next) => {
         req.user = decode; // we won't get Id till we do this
         next();
     } catch (error) {
-        console.log(error)
+        // console.log(error);
     }
 
 }
@@ -36,7 +36,7 @@ export const isAdmin = async (req, res, next) => {
         }
 
     } catch (error) {
-        console.log(error)
+        // console.log(error);
         return res.status(401).json({
             success: false,
             message: 'Error in admin middleware',

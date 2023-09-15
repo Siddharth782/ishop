@@ -78,7 +78,7 @@ router.post('/create-product', requireSignIn, isAdmin, formidable(), async (req,
         })
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             error,
@@ -90,15 +90,15 @@ router.post('/create-product', requireSignIn, isAdmin, formidable(), async (req,
 
 // updating product
 router.put('/update-product/:pid', requireSignIn, isAdmin, formidable(), async (req, res) => {
-    console.log("inside function")
+    // console.log("inside function")
     try {
-        console.log("inside function & trying")
+        // console.log("inside function & trying")
 
         const { name, slug, description, price, category, quantity, shipping } = req.fields;
         const { photo } = req.files;
         const { pid } = req.params;
 
-        console.log("after destruct")
+        // console.log("after destruct")
         switch (true) {
             case !name:
                 return res.status(500).send({
@@ -132,17 +132,17 @@ router.put('/update-product/:pid', requireSignIn, isAdmin, formidable(), async (
                 break;
         }
 
-        console.log("after checking values")
+        // console.log("after checking values")
         const products = await productModel.findByIdAndUpdate(pid, { ...req?.fields, slug: slugify(name) }, { new: true });
 
-        console.log("after finding product")
+        // console.log("after finding product")
 
         if (photo) {
             products.photo.data = fs.readFileSync(photo?.path);
             products.photo.contentType = photo.type;
         }
 
-        console.log("after checking photo")
+        // console.log("after checking photo")
         await products.save();
 
         return res.status(200).send({
@@ -152,7 +152,7 @@ router.put('/update-product/:pid', requireSignIn, isAdmin, formidable(), async (
         })
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         return res.status(500).send({
             success: false,
             error,
@@ -179,7 +179,7 @@ router.get('/get-product', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             error,
@@ -202,7 +202,7 @@ router.get('/get-product/:slug', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             error,
@@ -226,7 +226,7 @@ router.get('/product-photo/:pid', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             error,
@@ -250,7 +250,7 @@ router.delete('/delete-product/:pid', requireSignIn, isAdmin, async (req, res) =
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             error,
@@ -279,7 +279,7 @@ router.post('/product-filters', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(400).send({
             success: false,
             error,
@@ -301,7 +301,7 @@ router.get('/product-count', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(400).send({
             success: false,
             error,
@@ -326,7 +326,7 @@ router.get('/product-list/:page', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(400).send({
             success: false,
             error,
@@ -360,7 +360,7 @@ router.get('/search/:keyword', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(400).send({
             success: false,
             error,
@@ -388,7 +388,7 @@ router.get('/related-product/:pid/:cid', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(400).send({
             success: false,
             error,
@@ -416,7 +416,7 @@ router.get('/product-category/:slug', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(400).send({
             success: false,
             error,
@@ -441,7 +441,7 @@ router.get('/braintree/token', async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(400).send({
             success: false,
             error,
@@ -483,7 +483,7 @@ router.post('/braintree/payment', requireSignIn, async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(400).send({
             success: false,
             error,

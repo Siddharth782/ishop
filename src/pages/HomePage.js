@@ -32,7 +32,7 @@ const HomePage = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Something went wrong while getting products");
         }
 
@@ -50,7 +50,7 @@ const HomePage = () => {
 
         } catch (error) {
             setLoading(false);
-            console.log(error);
+            // console.log(error);;
             toast.error("Something went wrong while getting products");
         }
 
@@ -67,7 +67,7 @@ const HomePage = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
         }
 
     }
@@ -93,7 +93,7 @@ const HomePage = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
         }
 
     }
@@ -104,7 +104,7 @@ const HomePage = () => {
             // localStorage.setItem('cart', JSON.stringify([...cart, product]));
             toast.success("Item added to cart");
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error while adding item to cart");
         }
     }
@@ -120,7 +120,7 @@ const HomePage = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
         }
     }
 
@@ -137,7 +137,7 @@ const HomePage = () => {
 
         } catch (error) {
             setLoading(false);
-            console.log(error);
+            // console.log(error);;
         }
     }
 

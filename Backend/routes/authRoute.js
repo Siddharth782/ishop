@@ -72,7 +72,7 @@ router.post('/register', [
 
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).json({
             success: false,
             message: 'Error while Registering',
@@ -130,7 +130,7 @@ router.post("/login", async (req, res) => {
         });
 
     } catch (error) {
-        console.log(`Error while logging in ${error}`);
+        // console.log(`Error while logging in ${error}`);
         res.status(500).json({
             success: false,
             message: 'Error while logging in',
@@ -177,7 +177,7 @@ router.post('/forgotPassword', async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             message: 'Something went wrong while updating password',
@@ -192,7 +192,7 @@ router.get('/test', requireSignIn, isAdmin, (req, res) => {
     try {
         res.send({ message: "Protected Routes" });
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.send({ error });
     }
 })
@@ -246,7 +246,7 @@ router.put('/profile', requireSignIn, async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             message: 'Error while updating profile',
@@ -265,7 +265,7 @@ router.get('/orders', requireSignIn, async (req, res) => {
         res.json(orders);
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             message: 'Error while getting orders',
@@ -283,7 +283,7 @@ router.get('/all-orders', requireSignIn, isAdmin, async (req, res) => {
         res.json(orders);
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             message: 'Error while getting received orders',
@@ -301,7 +301,7 @@ router.get('/order-details/:id', requireSignIn, async (req, res) => {
         res.json(order);
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             message: 'Error while getting order details',
@@ -320,7 +320,7 @@ router.put('/order-update/:id', requireSignIn, isAdmin, async (req, res) => {
         res.json(order);
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);;
         res.status(500).send({
             success: false,
             message: 'Error while updating order status',

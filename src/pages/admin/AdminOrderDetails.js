@@ -34,13 +34,13 @@ const AdminOrderDetails = () => {
                 }
             });
 
-            console.log("this is data", data);
+            // console.log("this is data", data);
 
             setOrder(data);
             setProducts(data?.products);
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error while getting orders")
         }
     }
@@ -62,7 +62,7 @@ const AdminOrderDetails = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error in updating status");
         }
     };

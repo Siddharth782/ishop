@@ -22,7 +22,7 @@ const OrderDetails = () => {
             // localStorage.setItem('cart', JSON.stringify([...cart, product]));
             toast.success("Item added to cart");
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error while adding item to cart");
         }
     }
@@ -39,18 +39,18 @@ const OrderDetails = () => {
                 }
             });
 
-            console.log("this is data", data);
+            // console.log("this is data", data);
 
             setOrder(data);
             setProducts(data?.products);
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error while getting orders")
         }
     }
 
-    console.log("this is products", products);
+    // console.log("this is products", products);
 
     useEffect(() => {
         getOrderDetails();

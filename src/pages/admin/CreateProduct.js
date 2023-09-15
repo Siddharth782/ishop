@@ -35,7 +35,7 @@ const CreateProduct = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Something went wrong while getting category");
         }
 
@@ -45,7 +45,7 @@ const CreateProduct = () => {
     const handleCreate = async (e) => {
         e.preventDefault();
         try {
-            console.log("this is inside create product");
+            // console.log("this is inside create product");
 
             const productData = new FormData();
             productData.append("name", name);
@@ -56,7 +56,7 @@ const CreateProduct = () => {
             productData.append("category", category);
             productData.append("shipping", shipping);
 
-            console.log("this is product data", productData);
+            // console.log("this is product data", productData);
 
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/create-product`, productData, {
                 headers: {
@@ -65,7 +65,7 @@ const CreateProduct = () => {
                 }
             })
 
-            console.log("this is after axios posting", data);
+            // console.log("this is after axios posting", data);
 
             if (data?.success) {
                 toast.success(data?.message);
@@ -75,7 +75,7 @@ const CreateProduct = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error while adding new product");
         }
     }

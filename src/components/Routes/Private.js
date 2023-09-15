@@ -7,10 +7,10 @@ export default function PrivateRoute() {
 
     const [ok, setOk] = useState(false);
     const token = JSON.parse(localStorage?.getItem('auth'))?.token
-    console.log("inside private", token);
+    // console.log("inside private", token);
 
     const authCheck = async () => {
-        console.log("inside checking");
+        // console.log("inside checking");
         let res = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/user-auth`, {
             headers: {
                 "Authorization": token
@@ -20,7 +20,7 @@ export default function PrivateRoute() {
         if (res?.data?.ok) {
             setOk(true);
         } else setOk(false);
-        console.log("checking done");
+        // console.log("checking done");
 
     }
     useEffect(() => {

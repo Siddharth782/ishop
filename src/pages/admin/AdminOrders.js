@@ -26,7 +26,7 @@ const AdminOrders = () => {
             setOrders(data);
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error while getting orders")
         }
     }

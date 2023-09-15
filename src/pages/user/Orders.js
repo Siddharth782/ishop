@@ -23,12 +23,12 @@ const Orders = () => {
                 }
             });
 
-            console.log("this is data", data);
+            // console.log("this is data", data);
 
             setOrders(data);
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);;
             toast.error("Error while getting orders")
         }
     }
