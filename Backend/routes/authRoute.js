@@ -179,7 +179,7 @@ router.post('/forgotPassword', async (req, res) => {
         console.log(error);
         res.status(500).send({
             success: false,
-            message: 'Something went wrong',
+            message: 'Something went wrong while updating password',
             error
         })
     }
@@ -205,6 +205,54 @@ router.get('/user-auth', requireSignIn, (req, res) => {
 // protected route (i.e. only admin can access it)
 router.get('/admin-auth', requireSignIn, isAdmin, (req, res) => {
     res.status(200).send({ ok: true });
+})
+
+// update profile
+router.put('/profile', requireSignIn, async (req, res) => {
+    try {
+        const { name, email, address, phone } = req.body;
+
+        const existingEmail = await userModel.findOne({ email });
+
+        if (existingEmail) {
+            return res.json({
+                success: false,
+                message: 'A user with this email Id already exists'
+            })
+        }
+
+        const user = await userModel.findById(req.user?._id);
+
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                message: 'Please try again'
+            })
+        }
+
+
+        const updatedUser = await userModel.findByIdAndUpdate(user._id, {
+            name: name || user?.name,
+            email: email || user?.email,
+            address: address || user?.address,
+            phone: phone || user?.phone
+        }, { new: true });
+
+        return res.status(200).send({
+            success: true,
+            message: 'Profile Updated Successfully',
+            updatedUser
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error while updating profile',
+            error
+        })
+    }
+
 })
 
 export default router;

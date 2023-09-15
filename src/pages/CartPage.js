@@ -51,9 +51,7 @@ const CartPage = () => {
 
         <div className="row">
           <h2>Your Cart</h2>
-          {`Hello ${token && user?.name}`}
-
-          {!token && "Login to check your iShop cart"}
+          {/* {!token && "Login to check out"} */}
         </div>
 
         <div className="row">
@@ -87,12 +85,37 @@ const CartPage = () => {
             <h4>Cart Summary</h4>
             <hr />
             <h4>Total: {totalPrice()} </h4>
+            {user?.address?.length > 0 ?
+              (
+                <>
+                  <div className="mb-3">
+                    <h5>Current Address</h5>
+                    <h6>{user?.address}</h6>
+                    <button onClick={() => navigate('/dashboard/user/profile')} className='btn btn-outline-warning'>Update Address</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {
+                    token ? (
+                      <button onClick={() => navigate('/dashboard/user/profile')} className='btn btn-outline-primary'>
+                        Add an Address
+                      </button>
+                    ) : (
+                      <button onClick={() => navigate('/login', { state: "/cart" })} className='btn btn-outline-primary'>
+                        Login to checkout
+                      </button>
+                    )
+                  }
+                </>
+              )
+            }
           </div>
         </div>
 
 
       </div>
-    </Layout>
+    </Layout >
   )
 }
 
