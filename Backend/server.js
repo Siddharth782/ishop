@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoute.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import cors from 'cors'
+import path from 'path'
 
 // // configuring env file
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(express.json());
 // middleware
 app.use(morgan('dev'))
 app.use(cors())
+// app.use(express.static(path.join(__dirname, '../build')))
 
 // Related to user -> new account creation, logging into your account
 app.use('/api/v1/auth', authRoutes);
@@ -36,6 +38,10 @@ app.use('/api/v1/product', productRoutes);
 app.get('/', (req, res) => {
     res.send('<h1>Welcome to iShop. Our own Ecommerce website</h1>');
 });
+
+// app.use('*', function (req, res) {
+//     res.sendFile(path.join(__dirname, '../build/index.html'))
+// })
 
 // local host port
 const PORT = 8000 || process.env.PORT;

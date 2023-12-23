@@ -46,9 +46,9 @@ const CategoryProduct = () => {
                                     <h6 className="card-title">{product?.name}</h6>
                                     <p className="card-text">Rs. {product?.price}</p>
                                     <p className="card-text">{product?.description.substring(0, 60)}</p>
-                                    <button onClick={() => { navigate(`/product/${product?.slug}`) }} className="btn btn-primary">More Details</button>
-                                    <button className="btn btn-secondary ms-1">Add to cart</button>
+                                    {/* <button className="btn btn-secondary ms-1">Add to cart</button> */}
                                 </div>
+                                <button onClick={() => { navigate(`/product/${product?.slug}`) }} className="d-flex btn btn-primary mb-6">Shop Now</button>
                             </div>
                         )}
                     </div>

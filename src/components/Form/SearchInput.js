@@ -31,7 +31,7 @@ const SearchInput = () => {
                     setSearchValue(e.target.value);
                     dispatch(searchActions.inputSearch({ keyword: e.target.value }))
                 }} />
-                <button className="btn btn-outline-success" type="submit">Search</button>
+                <button className="btn btn-outline-primary" type="submit" style={{ color: "darkblue" }}>Search</button>
             </form>
 
         </>
